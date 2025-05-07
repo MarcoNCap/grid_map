@@ -11,6 +11,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     # Find the grid_map_demos package share directory
     grid_map_demos_dir = get_package_share_directory('grid_map_demos')
+    rover_config_dir = get_package_share_directory('rover_config')
 
     # Declare launch configuration variables that can access the launch arguments values
     visualization_config_file = LaunchConfiguration('visualization_config')
@@ -31,9 +32,8 @@ def generate_launch_description():
 
     # Declare paramters for the grid_map_loader node
     loader_params = [{
-        'file_path': os.path.join(grid_map_demos_dir, 'data', 'grid_map_bag'),
-        'bag_topic': '/grid_map',
-        'publish_topic': '/grid_map',
+        'file_path': os.path.join(rover_config_dir,'models','mars_yard','meshes','elevation_map4.bag'), #'file_path': os.path.join(grid_map_demos_dir, 'data', 'grid_map_bag')
+        'publish_topic': 'grid_map',
         'duration': 10.0
     }]
 
@@ -41,7 +41,7 @@ def generate_launch_description():
     grid_map_loader_demo_node = Node(
         package='grid_map_loader',
         executable='grid_map_loader',
-        name='grid_map_loader_demo',
+        name='grid_map_loader_demo', # Name of the node without the prefix _node.cpp
         output='screen',
         parameters=loader_params
     )

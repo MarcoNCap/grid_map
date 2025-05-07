@@ -35,12 +35,18 @@ int main(int argc, char ** argv)
   gridMapPclLoader.loadParameters(gm::getParameterPath());
   gridMapPclLoader.loadCloudFromPcdFile(pathToCloud);
 
-  gm::processPointcloud(&gridMapPclLoader, node);
+  gm::processPointcloud(&gridMapPclLoader, node); // Process the point cloud to create the grid_map
 
-  grid_map::GridMap gridMap = gridMapPclLoader.getGridMap();
-  gridMap.setFrameId(gm::getMapFrame(node));
+  grid_map::GridMap gridMap = gridMapPclLoader.getGridMap(); // Load the created grid_map
+  gridMap.add("noise", 0.015 * grid_map::Matrix::Random(gridMap.getSize()(0), gridMap.getSize()(1)));
+  gridMap.add("normal_z", gridMap.get("normal_z"));
+  gridMap.setFrameId(gm::getMapFrame(node)); // Set the frame ID for the grid_map
+  
 
-  gm::saveGridMap(gridMap, node, gm::getMapRosbagTopic(node));
+  
+
+
+  gm::saveGridMap(gridMap, node, gm::getMapRosbagTopic(node)); // Save the grid_map to a rosbag topic
 
   // publish grid map
   auto msg = grid_map::GridMapRosConverter::toMessage(gridMap);

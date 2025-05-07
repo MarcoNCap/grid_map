@@ -11,6 +11,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     # Find the grid_map_demos package share directory
     grid_map_demos_dir = get_package_share_directory('grid_map_demos')
+    rover_config_dir = get_package_share_directory('rover_config')
 
     # Declare launch configuration variables that can access the launch arguments values
     visualization_config_file = LaunchConfiguration('visualization_config')
@@ -37,7 +38,8 @@ def generate_launch_description():
         output='screen',
         parameters=[
             {
-                'image_path': os.path.join(grid_map_demos_dir, 'data', 'eth_logo.png'),
+                'image_path': os.path.join(grid_map_demos_dir, 'data','terrain.png'),
+                # 'image_path': os.path.join(rover_config_dir,'models','mars_yard','meshes','PUTBOrtho.jpg'),
                 'topic': 'image'
             }
         ]

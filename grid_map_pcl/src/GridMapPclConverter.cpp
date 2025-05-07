@@ -22,79 +22,82 @@ GridMapPclConverter::~GridMapPclConverter()
 {
 }
 
-bool GridMapPclConverter::initializeFromPolygonMesh(
+bool GridMapPclConverter::initializeFromPolygonMesh( // The function aim is to create the base grid:
   const pcl::PolygonMesh & mesh,
   const double resolution,
   grid_map::GridMap & gridMap)
 {
   pcl::PointCloud<pcl::PointXYZ> cloud;
-  pcl::fromPCLPointCloud2(mesh.cloud, cloud);
-  pcl::PointXYZ minBound;
-  pcl::PointXYZ maxBound;
-  pcl::getMinMax3D(cloud, minBound, maxBound);
+  pcl::fromPCLPointCloud2(mesh.cloud, cloud); //Convert the mesh to a point cloud containing X Y Z coordinates
+  pcl::PointXYZ minBound; // Get the min bound  of the point cloud
+  pcl::PointXYZ maxBound; // Get the max bound of the point cloud
+  pcl::getMinMax3D(cloud, minBound, maxBound); //Calculates the min and max bounds of the point cloud
 
-  grid_map::Length length = grid_map::Length(maxBound.x - minBound.x, maxBound.y - minBound.y);
-  grid_map::Position position = grid_map::Position(
+  grid_map::Length length = grid_map::Length(maxBound.x - minBound.x, maxBound.y - minBound.y); // Calculate the length of the grid map
+  grid_map::Position position = grid_map::Position( // Calculate the center position of the grid map
     (maxBound.x + minBound.x) / 2.0,
     (maxBound.y + minBound.y) / 2.0);
-  gridMap.setGeometry(length, resolution, position);
+  gridMap.setGeometry(length, resolution, position); // Set the geometry of the grid map with the calculated length, resolution and  calculated position
 
-  return true;
+  return true; 
 }
 
-bool GridMapPclConverter::addLayerFromPolygonMesh(
+bool GridMapPclConverter::addLayerFromPolygonMesh( // The function aim is to add a layer to the grid map containing the height calculated from the mesh:
   const pcl::PolygonMesh & mesh,
   const std::string & layer,
   grid_map::GridMap & gridMap)
 {
   // Adding a layer to the grid map to put data into
-  gridMap.add(layer);
+  gridMap.add(layer); // Add a layer to the grid map with the name "layer"
   // Converting out of binary cloud data
-  pcl::PointCloud<pcl::PointXYZ> cloud;
+  pcl::PointCloud<pcl::PointXYZ> cloud; // Convert the mesh to a point cloud obj having X Y Z coordinates like before
   pcl::fromPCLPointCloud2(mesh.cloud, cloud);
   // Direction and max height for projection ray
-  const Eigen::Vector3f ray = -Eigen::Vector3f::UnitZ();
+  const Eigen::Vector3f ray = -Eigen::Vector3f::UnitZ(); // Set the ray direction to be in the negative Z direction
   pcl::PointXYZ minBound;
   pcl::PointXYZ maxBound;
-  pcl::getMinMax3D(cloud, minBound, maxBound);
+  pcl::getMinMax3D(cloud, minBound, maxBound); // Get the min and max bounds of the point cloud like before. It is needed to set the ray origin above the mesh
 
   // Iterating over the triangles in the mesh
   for (const pcl::Vertices & polygon : mesh.polygons) {
     // Testing this is a triangle
     assert(polygon.vertices.size() == 3);
     // Getting the vertices of the triangle (as a single matrix)
-    Eigen::Matrix3f triangleVertexMatrix;
-    triangleVertexMatrix.row(0) = cloud[polygon.vertices[0]].getVector3fMap();
-    triangleVertexMatrix.row(1) = cloud[polygon.vertices[1]].getVector3fMap();
-    triangleVertexMatrix.row(2) = cloud[polygon.vertices[2]].getVector3fMap();
+    Eigen::Matrix3f triangleVertexMatrix; // Create a 3x3 matrix to store the vertices coordinates of the triangle
+    triangleVertexMatrix.row(0) = cloud[polygon.vertices[0]].getVector3fMap(); // Get the coordinates of the first vertex of the triangle
+    triangleVertexMatrix.row(1) = cloud[polygon.vertices[1]].getVector3fMap(); // Get the coordinates of the second vertex of the triangle
+    triangleVertexMatrix.row(2) = cloud[polygon.vertices[2]].getVector3fMap(); // Get the coordinates of the third vertex of the triangle
     // Getting the bounds in the XY plane (down projection)
-    float maxX = triangleVertexMatrix.col(0).maxCoeff();
-    float minX = triangleVertexMatrix.col(0).minCoeff();
-    float maxY = triangleVertexMatrix.col(1).maxCoeff();
-    float minY = triangleVertexMatrix.col(1).minCoeff();
+    float maxX = triangleVertexMatrix.col(0).maxCoeff(); // Get the max X coordinate of the triangle vertices
+    float minX = triangleVertexMatrix.col(0).minCoeff(); // Get the min X coordinate of the triangle vertices
+    float maxY = triangleVertexMatrix.col(1).maxCoeff(); // Get the max Y coordinate of the triangle vertices
+    float minY = triangleVertexMatrix.col(1).minCoeff(); // Get the min Y coordinate of the triangle vertices
     // Iterating over the grid cells in the a submap below the triangle
-    grid_map::Length length(maxX - minX, maxY - minY);
-    grid_map::Position position((maxX + minX) / 2.0, (maxY + minY) / 2.0);
-    bool isSuccess;
-    SubmapGeometry submap(gridMap, position, length, isSuccess);
-    if (isSuccess) {
-      for (grid_map::SubmapIterator iterator(submap); !iterator.isPastEnd();
-        ++iterator)
+    grid_map::Length length(maxX - minX, maxY - minY); // Calculate the length of the submap, which is a smaller map centered on the triangle
+    grid_map::Position position((maxX + minX) / 2.0, (maxY + minY) / 2.0); // Calculate the center position of the submap
+    bool isSuccess; // Variable to check if the submap is valid
+    SubmapGeometry submap(gridMap, position, length, isSuccess); // Create a submap with the calculated length and position
+    if (isSuccess) { // If the submap is valid, we can proceed
+      for (grid_map::SubmapIterator iterator(submap); !iterator.isPastEnd(); 
+        ++iterator) // Iterate over the cells of the submap
       {
         // Cell position
-        const Index index(*iterator);
-        grid_map::Position vertexPositionXY;
-        gridMap.getPosition(index, vertexPositionXY);
+        const Index index(*iterator); // Get the index of the current cell
+        grid_map::Position vertexPositionXY; // Create a position variable to store the position of the current cell
+        gridMap.getPosition(index, vertexPositionXY); // Get the position of the current cell
         // Ray origin
         Eigen::Vector3f point(vertexPositionXY.x(), vertexPositionXY.y(),
-          maxBound.z + 1.0);
+          maxBound.z + 1.0); // Set the ray origin to be above the mesh, at the max Z coordinate of the point cloud + 1.0
         // Vertical ray/triangle intersection
-        Eigen::Vector3f intersectionPoint;
+        Eigen::Vector3f intersectionPoint; // Create a vector to store the intersection point
+        // Check if the ray intersects with the triangle
         if (rayTriangleIntersect(point, ray, triangleVertexMatrix, intersectionPoint)) {
           // If data already present in this cell, taking the max, else setting the data
-          if (gridMap.isValid(index, layer)) {
+          if (gridMap.isValid(index, layer)) { // Check if the cell already has data
+            // If the cell already has data, we take the max of the current data and the new intersection point
             gridMap.at(layer, index) = std::max(gridMap.at(layer, index), intersectionPoint.z());
-          } else {
+          } else { // If the cell does not have data, we set the data to the intersection point
+            // Set the data of the cell to the intersection point
             gridMap.at(layer, index) = intersectionPoint.z();
           }
         }
@@ -102,7 +105,7 @@ bool GridMapPclConverter::addLayerFromPolygonMesh(
     }
   }
   // Success
-  return true;
+  return true; // Return true if the layer was added successfully
 }
 
 bool GridMapPclConverter::rayTriangleIntersect(

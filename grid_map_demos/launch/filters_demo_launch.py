@@ -51,7 +51,7 @@ def generate_launch_description():
         name='image_publisher',
         output='screen',
         parameters=[{
-            'image_path': os.path.join(grid_map_demos_dir, 'data', 'terrain.png'),
+            'image_path': os.path.join(grid_map_demos_dir, 'data', 'radialGradient_ellipse.png'), #'image_path': os.path.join(grid_map_demos_dir, 'data', 'terrain.png'),
             'topic': 'image'
         }]
     )
