@@ -5,10 +5,16 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Elevation1
+        - /Axes1
         - /Elevation1/Autocompute Value Bounds1
-      Splitter Ratio: 0.6114649772644043
-    Tree Height: 870
+        - /TF1
+        - /TF1/Tree1/map1
+        - /TF1/Tree1/map1/odom1
+        - /TF1/Tree1/map1/odom1/base_link1
+        - /RobotModel1
+        - /RobotModel1/Mass Properties1
+      Splitter Ratio: 0.6111111044883728
+    Tree Height: 1226
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -27,9 +33,9 @@ Visualization Manager:
   Displays:
     - Class: rviz_default_plugins/Axes
       Enabled: true
-      Length: 0.20000000298023224
+      Length: 1
       Name: Axes
-      Radius: 0.009999999776482582
+      Radius: 0.10000000149011612
       Reference Frame: <Fixed Frame>
       Value: true
     - Alpha: 1
@@ -195,7 +201,7 @@ Visualization Manager:
         Value: /elevation_cells
       Value: false
     - Class: rviz_default_plugins/Marker
-      Enabled: false
+      Enabled: true
       Name: Surface Normals
       Namespaces:
         {}
@@ -206,7 +212,591 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /surface_normals
-      Value: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz_default_plugins/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: Pose
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Axes
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /goal_initial_pose
+      Value: true
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+        base_link:
+          Value: true
+        camera_bottom_screw_frame:
+          Value: false
+        camera_left_optical_frame:
+          Value: false
+        camera_link:
+          Value: false
+        camera_right_optical_frame:
+          Value: false
+        fog_link:
+          Value: false
+        gnss_link:
+          Value: false
+        imu_link:
+          Value: false
+        lidar_link:
+          Value: false
+        lidar_link_optical:
+          Value: false
+        link_DEP_LF:
+          Value: false
+        link_DEP_LM:
+          Value: false
+        link_DEP_LR:
+          Value: false
+        link_DEP_RF:
+          Value: false
+        link_DEP_RM:
+          Value: false
+        link_DEP_RR:
+          Value: false
+        link_DRV_LF:
+          Value: false
+        link_DRV_LM:
+          Value: false
+        link_DRV_LR:
+          Value: false
+        link_DRV_RF:
+          Value: false
+        link_DRV_RM:
+          Value: false
+        link_DRV_RR:
+          Value: false
+        link_STR_LF:
+          Value: false
+        link_STR_LM:
+          Value: false
+        link_STR_LR:
+          Value: false
+        link_STR_RF:
+          Value: false
+        link_STR_RM:
+          Value: false
+        link_STR_RR:
+          Value: false
+        link_bogie_LFB:
+          Value: false
+        link_bogie_MRB:
+          Value: false
+        link_bogie_RFB:
+          Value: false
+        link_camera:
+          Value: false
+        link_camera_left:
+          Value: false
+        link_camera_right:
+          Value: false
+        link_mast:
+          Value: false
+        link_pan:
+          Value: false
+        link_tilt:
+          Value: false
+        map:
+          Value: false
+        odom:
+          Value: false
+        thermal_RGB_frame:
+          Value: false
+        thermal_RGB_optical_frame:
+          Value: false
+      Marker Scale: 5
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: false
+      Tree:
+        map:
+          odom:
+            base_link:
+              camera_bottom_screw_frame:
+                camera_link:
+                  {}
+              lidar_link:
+                lidar_link_optical:
+                  {}
+              link_bogie_LFB:
+                link_DEP_LF:
+                  link_STR_LF:
+                    link_DRV_LF:
+                      {}
+                link_DEP_LM:
+                  link_STR_LM:
+                    link_DRV_LM:
+                      {}
+              link_bogie_MRB:
+                link_DEP_LR:
+                  link_STR_LR:
+                    link_DRV_LR:
+                      {}
+                link_DEP_RR:
+                  link_STR_RR:
+                    link_DRV_RR:
+                      {}
+              link_bogie_RFB:
+                link_DEP_RF:
+                  link_STR_RF:
+                    link_DRV_RF:
+                      {}
+                link_DEP_RM:
+                  link_STR_RM:
+                    link_DRV_RM:
+                      {}
+              link_mast:
+                fog_link:
+                  {}
+                gnss_link:
+                  {}
+                imu_link:
+                  {}
+                link_pan:
+                  link_tilt:
+                    link_camera:
+                      link_camera_left:
+                        camera_left_optical_frame:
+                          {}
+                      link_camera_right:
+                        camera_right_optical_frame:
+                          {}
+              thermal_RGB_frame:
+                thermal_RGB_optical_frame:
+                  {}
+      Update Interval: 0
+      Value: true
+    - Alpha: 1
+      Class: rviz_default_plugins/RobotModel
+      Collision Enabled: true
+      Description File: /root/ros/marta_ws/install/rover_config/share/rover_config/models/marta_model/marta_urdf.urdf
+      Description Source: Topic
+      Description Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot_description
+      Enabled: true
+      Link/Joint Tree:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Tree of links and joints
+        base_link:
+          Details:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          Value: true
+          camera_joint:
+            Details:
+              Show Axes: false
+            Value: true
+            camera_bottom_screw_frame:
+              Details:
+                Alpha: 1
+                Show Axes: false
+                Show Trail: false
+              camera_link_joint:
+                Details:
+                  Show Axes: false
+                Value: true
+                camera_link:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+                  Value: true
+          joint_bogie_LFB:
+            Details:
+              Show Axes: false
+              Show Joint Axis: false
+            Value: true
+            link_bogie_LFB:
+              Details:
+                Alpha: 1
+                Show Axes: false
+                Show Trail: false
+              Value: true
+              joint_DEP_LF:
+                Details:
+                  Show Axes: false
+                  Show Joint Axis: false
+                Value: true
+                link_DEP_LF:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+                  Value: true
+                  joint_STR_LF:
+                    Details:
+                      Show Axes: false
+                      Show Joint Axis: false
+                    Value: true
+                    link_STR_LF:
+                      Details:
+                        Alpha: 1
+                        Show Axes: false
+                        Show Trail: false
+                      Value: true
+                      joint_DRV_LF:
+                        Details:
+                          Show Axes: false
+                          Show Joint Axis: false
+                        Value: true
+                        link_DRV_LF:
+                          Details:
+                            Alpha: 1
+                            Show Axes: false
+                            Show Trail: false
+                          Value: true
+              joint_DEP_LM:
+                Details:
+                  Show Axes: false
+                  Show Joint Axis: false
+                Value: true
+                link_DEP_LM:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+                  Value: true
+                  joint_STR_LM:
+                    Details:
+                      Show Axes: false
+                      Show Joint Axis: false
+                    Value: true
+                    link_STR_LM:
+                      Details:
+                        Alpha: 1
+                        Show Axes: false
+                        Show Trail: false
+                      Value: true
+                      joint_DRV_LM:
+                        Details:
+                          Show Axes: false
+                          Show Joint Axis: false
+                        Value: true
+                        link_DRV_LM:
+                          Details:
+                            Alpha: 1
+                            Show Axes: false
+                            Show Trail: false
+                          Value: true
+          joint_bogie_MRB:
+            Details:
+              Show Axes: false
+              Show Joint Axis: false
+            Value: true
+            link_bogie_MRB:
+              Details:
+                Alpha: 1
+                Show Axes: false
+                Show Trail: false
+              Value: true
+              joint_DEP_LR:
+                Details:
+                  Show Axes: false
+                  Show Joint Axis: false
+                Value: true
+                link_DEP_LR:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+                  Value: true
+                  joint_STR_LR:
+                    Details:
+                      Show Axes: false
+                      Show Joint Axis: false
+                    Value: true
+                    link_STR_LR:
+                      Details:
+                        Alpha: 1
+                        Show Axes: false
+                        Show Trail: false
+                      Value: true
+                      joint_DRV_LR:
+                        Details:
+                          Show Axes: false
+                          Show Joint Axis: false
+                        Value: true
+                        link_DRV_LR:
+                          Details:
+                            Alpha: 1
+                            Show Axes: false
+                            Show Trail: false
+                          Value: true
+              joint_DEP_RR:
+                Details:
+                  Show Axes: false
+                  Show Joint Axis: false
+                Value: true
+                link_DEP_RR:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+                  Value: true
+                  joint_STR_RR:
+                    Details:
+                      Show Axes: false
+                      Show Joint Axis: false
+                    Value: true
+                    link_STR_RR:
+                      Details:
+                        Alpha: 1
+                        Show Axes: false
+                        Show Trail: false
+                      Value: true
+                      joint_DRV_RR:
+                        Details:
+                          Show Axes: false
+                          Show Joint Axis: false
+                        Value: true
+                        link_DRV_RR:
+                          Details:
+                            Alpha: 1
+                            Show Axes: false
+                            Show Trail: false
+                          Value: true
+          joint_bogie_RFB:
+            Details:
+              Show Axes: false
+              Show Joint Axis: false
+            Value: true
+            link_bogie_RFB:
+              Details:
+                Alpha: 1
+                Show Axes: false
+                Show Trail: false
+              Value: true
+              joint_DEP_RF:
+                Details:
+                  Show Axes: false
+                  Show Joint Axis: false
+                Value: true
+                link_DEP_RF:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+                  Value: true
+                  joint_STR_RF:
+                    Details:
+                      Show Axes: false
+                      Show Joint Axis: false
+                    Value: true
+                    link_STR_RF:
+                      Details:
+                        Alpha: 1
+                        Show Axes: false
+                        Show Trail: false
+                      Value: true
+                      joint_DRV_RF:
+                        Details:
+                          Show Axes: false
+                          Show Joint Axis: false
+                        Value: true
+                        link_DRV_RF:
+                          Details:
+                            Alpha: 1
+                            Show Axes: false
+                            Show Trail: false
+                          Value: true
+              joint_DEP_RM:
+                Details:
+                  Show Axes: false
+                  Show Joint Axis: false
+                Value: true
+                link_DEP_RM:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+                  Value: true
+                  joint_STR_RM:
+                    Details:
+                      Show Axes: false
+                      Show Joint Axis: false
+                    Value: true
+                    link_STR_RM:
+                      Details:
+                        Alpha: 1
+                        Show Axes: false
+                        Show Trail: false
+                      Value: true
+                      joint_DRV_RM:
+                        Details:
+                          Show Axes: false
+                          Show Joint Axis: false
+                        Value: true
+                        link_DRV_RM:
+                          Details:
+                            Alpha: 1
+                            Show Axes: false
+                            Show Trail: false
+                          Value: true
+          lidar_joint:
+            Details:
+              Show Axes: false
+            lidar_link:
+              Details:
+                Alpha: 1
+                Show Axes: false
+                Show Trail: false
+              lidar_optical_joint:
+                Details:
+                  Show Axes: false
+                lidar_link_optical:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+          ptu_base:
+            Details:
+              Show Axes: false
+            Value: true
+            link_mast:
+              Details:
+                Alpha: 1
+                Show Axes: false
+                Show Trail: false
+              Value: true
+              fog_joint:
+                Details:
+                  Show Axes: false
+                fog_link:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+              gnss_joint:
+                Details:
+                  Show Axes: false
+                gnss_link:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+              imu_joint:
+                Details:
+                  Show Axes: false
+                Value: true
+                imu_link:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+                  Value: true
+              joint_PAN:
+                Details:
+                  Show Axes: false
+                  Show Joint Axis: false
+                Value: true
+                link_pan:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+                  Value: true
+                  joint_TLT:
+                    Details:
+                      Show Axes: false
+                      Show Joint Axis: false
+                    Value: true
+                    link_tilt:
+                      Details:
+                        Alpha: 1
+                        Show Axes: false
+                        Show Trail: false
+                      Value: true
+                      joint_camera:
+                        Details:
+                          Show Axes: false
+                        Value: true
+                        link_camera:
+                          Details:
+                            Alpha: 1
+                            Show Axes: false
+                            Show Trail: false
+                          Value: true
+                          joint_camera_left:
+                            Details:
+                              Show Axes: false
+                            link_camera_left:
+                              Details:
+                                Alpha: 1
+                                Show Axes: false
+                                Show Trail: false
+                              joint_camera_left_optical:
+                                Details:
+                                  Show Axes: false
+                                camera_left_optical_frame:
+                                  Details:
+                                    Alpha: 1
+                                    Show Axes: false
+                                    Show Trail: false
+                          joint_camera_right:
+                            Details:
+                              Show Axes: false
+                            link_camera_right:
+                              Details:
+                                Alpha: 1
+                                Show Axes: false
+                                Show Trail: false
+                              joint_camera_right_optical:
+                                Details:
+                                  Show Axes: false
+                                camera_right_optical_frame:
+                                  Details:
+                                    Alpha: 1
+                                    Show Axes: false
+                                    Show Trail: false
+          thermal_joint:
+            Details:
+              Show Axes: false
+            thermal_RGB_frame:
+              Details:
+                Alpha: 1
+                Show Axes: false
+                Show Trail: false
+              thermal_optical_joint:
+                Details:
+                  Show Axes: false
+                thermal_RGB_optical_frame:
+                  Details:
+                    Alpha: 1
+                    Show Axes: false
+                    Show Trail: false
+      Mass Properties:
+        Inertia: false
+        Mass: false
+      Name: RobotModel
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
   Enabled: true
   Global Options:
     Background Color: 0; 0; 0
@@ -253,39 +843,39 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 11.374154090881348
+      Distance: 22.169166564941406
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 3.043599843978882
-        Y: 4.591352462768555
-        Z: -0.5284855961799622
+        X: 3.378530502319336
+        Y: 4.660616874694824
+        Z: -0.05109337344765663
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.6747975945472717
+      Pitch: 0.5997965931892395
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.8454103469848633
+      Yaw: 4.9704179763793945
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1015
+  Height: 1371
   Hide Left Dock: false
   Hide Right Dock: true
-  QMainWindow State: 000000ff00000000fd00000004000000000000016a000003a1fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003b000003a1000000c700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f0000040efc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000280000040e000000a000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004120000003efc0100000002fb0000000800540069006d00650100000000000004120000000000000000fb0000000800540069006d00650100000000000004500000000000000000000005c8000003a100000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000016a00000505fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003b00000505000000c700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f0000040efc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000280000040e000000a000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004120000003efc0100000002fb0000000800540069006d00650100000000000004120000000000000000fb0000000800540069006d00650100000000000004500000000000000000000005270000050500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Tool Properties:
     collapsed: false
   Views:
     collapsed: true
-  Width: 1848
-  X: 72
+  Width: 1687
+  X: 66
   Y: 32

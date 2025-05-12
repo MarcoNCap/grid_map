@@ -60,6 +60,8 @@ bool GridMapLoader::load()
   RCLCPP_INFO_STREAM(this->get_logger(), "Loading grid map from path " << filePath_ << ".");
   return grid_map::GridMapRosConverter::loadFromBag(filePath_, bagTopic_, map_);
 }
+ // Create a layer for the surface normals:
+  // grid_map.add('surface_normal',0)
 
 void GridMapLoader::publish()
 {

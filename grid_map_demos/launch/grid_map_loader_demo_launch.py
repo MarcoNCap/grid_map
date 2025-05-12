@@ -12,27 +12,35 @@ def generate_launch_description():
     # Find the grid_map_demos package share directory
     grid_map_demos_dir = get_package_share_directory('grid_map_demos')
     rover_config_dir = get_package_share_directory('rover_config')
+    
 
     # Declare launch configuration variables that can access the launch arguments values
+    filters_config_file = LaunchConfiguration('filters_config')
     visualization_config_file = LaunchConfiguration('visualization_config')
     rviz_config_file = LaunchConfiguration('rviz_config')
 
     # Declare launch arguments
+    declare_filters_config_file_cmd = DeclareLaunchArgument(
+        'filters_config',
+        default_value=os.path.join(
+            grid_map_demos_dir, 'config', 'filters_demo_filter_chain.yaml'),
+        description='Full path to the filter chain config file to use')
+    
     declare_visualization_config_file_cmd = DeclareLaunchArgument(
         'visualization_config',
         default_value=os.path.join(
-            grid_map_demos_dir, 'config', 'grid_map_loader_demo.yaml'),
+            grid_map_demos_dir, 'config', 'grid_map_loader_demo.yaml'), #grid_map_loader_demo.yaml <--- ORIGINAL
         description='Full path to the Gridmap visualization config file to use')
 
     declare_rviz_config_file_cmd = DeclareLaunchArgument(
         'rviz_config',
         default_value=os.path.join(
-            grid_map_demos_dir, 'rviz', 'grid_map_demo.rviz'),
+            grid_map_demos_dir, 'rviz', 'grid_map_demo.rviz'), #grid_map_demo.rviz <--- ORIGINAL
         description='Full path to the RVIZ config file to use')
 
     # Declare paramters for the grid_map_loader node
     loader_params = [{
-        'file_path': os.path.join(rover_config_dir,'models','mars_yard','meshes','elevation_map4.bag'), #'file_path': os.path.join(grid_map_demos_dir, 'data', 'grid_map_bag')
+        'file_path': os.path.join(rover_config_dir,'models','mars_yard','meshes','elevation_map_test3.bag'), #'file_path': os.path.join(grid_map_demos_dir, 'data', 'grid_map_bag')
         'publish_topic': 'grid_map',
         'duration': 10.0
     }]
@@ -44,6 +52,15 @@ def generate_launch_description():
         name='grid_map_loader_demo', # Name of the node without the prefix _node.cpp
         output='screen',
         parameters=loader_params
+    )
+
+    # Declare node actions
+    grid_map_filter_demo_node = Node(
+        package='grid_map_demos',
+        executable='filters_demo',
+        name='grid_map_filters',
+        output='screen',
+        parameters=[filters_config_file]
     )
 
     grid_map_visualization_node = Node(
@@ -66,11 +83,13 @@ def generate_launch_description():
     ld = LaunchDescription()
 
     # Add launch arguments to the launch description
+    ld.add_action(declare_filters_config_file_cmd)
     ld.add_action(declare_visualization_config_file_cmd)
     ld.add_action(declare_rviz_config_file_cmd)
 
     # Add node actions to the launch description
     ld.add_action(grid_map_loader_demo_node)
+    # ld.add_action(grid_map_filter_demo_node)
     ld.add_action(grid_map_visualization_node)
     ld.add_action(rviz2_node)
 
