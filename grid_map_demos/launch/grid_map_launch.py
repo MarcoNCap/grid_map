@@ -128,6 +128,18 @@ def generate_launch_description():
         parameters=[visualization_config_file]
     )
 
+    odom_to_world_cmd = Node(package='tf2_ros',
+                                 executable='static_transform_publisher',
+                                 name='map_odom_fix_broadcaster',
+                                 arguments=['--frame-id', 'odom', '--child-frame-id', 'world'])
+    
+    world_to_map_cmd = Node(package='tf2_ros',
+                                 executable='static_transform_publisher',
+                                 name='map_odom_fix_broadcaster',
+                                 arguments=['--frame-id', 'odom', '--child-frame-id', 'map'])
+    
+
+
     rviz2_node = Node(
         package='rviz2',
         executable='rviz2',
@@ -152,6 +164,8 @@ def generate_launch_description():
     ld.add_action(filter_map_node)
     ld.add_action(grid_map_visualization_node)
     ld.add_action(rviz2_node)
+    ld.add_action(odom_to_world_cmd)
+    ld.add_action(world_to_map_cmd)
 
 
     return ld
